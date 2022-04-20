@@ -1,0 +1,30 @@
+name: 'Auto Merge Hotfixes/Releases into Dev'
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && (startsWith(github.head_ref, 'hotfix') || startsWith(github.head_ref, 'release'))
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sync Master and Development Branch
+        uses: everlytic/branch-merge@1.1.2
+        with:
+          github_token: ${{ github.token }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'develop'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+      - name: Report Status
+        if: failure()
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              "message": "Auto merge with Development Branch has failed!"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
