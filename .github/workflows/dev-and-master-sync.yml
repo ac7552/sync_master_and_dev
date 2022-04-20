@@ -19,12 +19,4 @@ jobs:
           target_branch: 'develop'
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
       - name: Report Status
-        if: failure()
-        uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: |
-            {
-              "message": "Auto merge with Development Branch has failed!"
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
