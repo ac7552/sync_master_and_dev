@@ -1,4 +1,4 @@
-name: 'Auto Merge Hotfixes/Releases into Dev'
+#name: 'Auto Merge Hotfixes/Releases into Dev'
 on:
   pull_request:
     types: [closed]
