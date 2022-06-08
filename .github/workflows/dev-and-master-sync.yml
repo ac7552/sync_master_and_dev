@@ -11,6 +11,10 @@ jobs:
     if: github.event.pull_request.merged == true && (startsWith(github.head_ref, 'hotfix') || startsWith(github.head_ref, 'release'))
     steps:
       - uses: actions/checkout@v2
+      - name: Auto Approve Branch
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Sync Master and Development Branch
         uses: everlytic/branch-merge@1.1.2
         with:
