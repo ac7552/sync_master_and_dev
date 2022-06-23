@@ -18,7 +18,7 @@ jobs:
       - name: Sync Master and Development Branch
         uses: everlytic/branch-merge@1.1.2
         with:
-          github_token: ${{ github.token }}
+          github_token: ${{ ADMIN_TOKEN }}
           source_ref: ${{ github.ref }}
           target_branch: 'develop'
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
